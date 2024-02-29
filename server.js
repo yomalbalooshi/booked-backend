@@ -4,12 +4,15 @@ var path = require('path')
 var cookieParser = require('cookie-parser')
 var logger = require('morgan')
 var methodOverride = require('method-override')
+var cors = require('cors')
 require('dotenv').config()
 require('./config/database')
 
 var indexRouter = require('./routes/index')
 var usersRouter = require('./routes/users')
 const AuthRouter = require('./routes/AuthRouter')
+const { resourceUsage } = require('process')
+const MailRouter = require('./routes/sendMail')
 
 var app = express()
 
@@ -22,10 +25,12 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')))
+app.use(cors())
 
 app.use('/', indexRouter)
 app.use('/users', usersRouter)
 app.use('/', AuthRouter)
+app.use('/mail', MailRouter)
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

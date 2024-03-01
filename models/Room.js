@@ -10,7 +10,7 @@ const RoomSchema = new Schema(
       }
     ],
     maxGuests: Number,
-    Images: [
+    images: [
       {
         type: String
       }

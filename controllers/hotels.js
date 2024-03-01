@@ -1,11 +1,11 @@
 const Hotel = require('../models/Hotel')
 
 const index = async (req, res) => {
-  const hotels = await Hotel.find({})
+  const hotels = await Hotel.find({}).populate('rooms')
   res.send(hotels)
 }
 const show = async (req, res) => {
-  const hotel = await Hotel.findById(req.params.id)
+  const hotel = await Hotel.findById(req.params.id).populate('rooms')
   res.send(hotel)
   //might need to populate/add more details later
 }

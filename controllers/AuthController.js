@@ -35,8 +35,10 @@ const LoginCustomer = async (req, res) => {
     if (matched) {
       let payload = {
         id: customer.id,
-        email: customer.email
+        email: customer.email,
+        type: 'customer'
       }
+      console.log(payload)
       let token = middleware.createToken(payload)
       return res.send({ customer: payload, token })
     }
@@ -67,7 +69,8 @@ const UpdatePasswordCustomer = async (req, res) => {
       })
       let payload = {
         id: customer.id,
-        email: customer.email
+        email: customer.email,
+        type: 'customer'
       }
       return res.send({ status: 'Password Updated!', company: payload })
     }
@@ -114,7 +117,8 @@ const LoginCompany = async (req, res) => {
     if (matched) {
       let payload = {
         id: company.id,
-        email: company.email
+        email: company.email,
+        type: 'company'
       }
       let token = middleware.createToken(payload)
       return res.send({ company: payload, token })
@@ -146,7 +150,8 @@ const UpdatePasswordCompany = async (req, res) => {
       })
       let payload = {
         id: company.id,
-        email: company.email
+        email: company.email,
+        type: 'company'
       }
       return res.send({ status: 'Password Updated!', company: payload })
     }

@@ -9,7 +9,8 @@ const RoomSchema = new Schema(
         type: String
       }
     ],
-    maxGuests: Number,
+    maxAdults: Number,
+    maxChildren: Number,
     images: [
       {
         type: String

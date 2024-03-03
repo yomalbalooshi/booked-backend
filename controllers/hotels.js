@@ -9,6 +9,11 @@ const show = async (req, res) => {
   res.send(hotel)
   //might need to populate/add more details later
 }
+const showCompanyHotels = async (req, res) => {
+  const hotel = await Hotel.find({ companyId: req.params.id })
+  res.send(hotel)
+  //might need to populate/add more details later
+}
 const create = async (req, res) => {
   // Remove empty properties so that defaults will be applied
   for (let key in req.body) {
@@ -38,7 +43,7 @@ const update = async (req, res) => {
     locationLat: req.body.locationLat,
     city: req.body.city,
     country: req.body.country,
-    image: req.body.image
+    amenities: req.body.amenities
   }
   try {
     const updatedHotel = await Hotel.findOneAndUpdate(
@@ -54,6 +59,7 @@ const update = async (req, res) => {
 
 module.exports = {
   index,
+  showCompanyHotels,
   show,
   create,
   deleteHotel,

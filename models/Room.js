@@ -9,6 +9,7 @@ const RoomSchema = new Schema(
         type: String
       }
     ],
+    hotelId: { type: Schema.Types.ObjectId, ref: 'Hotel' },
     maxAdults: Number,
     maxChildren: Number,
     images: [

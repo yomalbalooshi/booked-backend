@@ -1,4 +1,5 @@
 const Room = require('../models/Room')
+const Hotel = require('../models/Hotel')
 
 const index = async (req, res) => {
   const rooms = await Room.find({})
@@ -30,6 +31,9 @@ const create = async (req, res) => {
   }
   try {
     const room = await Room.create(req.body)
+    const hotel = await Hotel.findById(req.body.hotelId)
+    hotel.rooms.push(room._id)
+    await hotel.save()
     res.send(room)
   } catch (err) {
     res.send(`error in creating room: ${err}`)

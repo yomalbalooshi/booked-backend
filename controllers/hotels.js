@@ -1,13 +1,17 @@
 const Hotel = require('../models/Hotel')
+const Review = require('../models/Review')
+const reviewCtrl = require('../controllers/reviews')
 
 const index = async (req, res) => {
   const hotels = await Hotel.find({}).populate('rooms').populate('location')
   res.send(hotels)
 }
 const show = async (req, res) => {
+
   const hotel = await Hotel.findById(req.params.id)
     .populate('rooms')
     .populate('location')
+
   res.send(hotel)
   //might need to populate/add more details later
 }
@@ -23,6 +27,9 @@ const create = async (req, res) => {
   }
   try {
     const hotel = await Hotel.create(req.body)
+    const company = await Company.findById(req.body.companyId)
+    company.hotels.push(hotel._id)
+    await company.save()
     res.send(hotel)
   } catch (err) {
     res.send(`error in creating hotel: ${err}`)
@@ -54,10 +61,31 @@ const update = async (req, res) => {
       { $set: update },
       { new: true }
     )
+
     res.send(updatedHotel)
   } catch (error) {
     console.log(`error:${error}`)
   }
+}
+
+const createReview = async (req, res) => {
+  console.log('Creating hotel review..')
+  try {
+    const reviewBody = {
+      feedback: req.body.feedback,
+      customerId: req.body.customerId,
+      rating: req.body.rating
+    }
+    // await review.save()
+    const review = await reviewCtrl.createReview(reviewBody)
+    const hotel = await Hotel.findById(req.params.id).populate('reviews')
+    hotel.reviews.push(review._id)
+    await hotel.save()
+    res.send(hotel)
+  } catch (err) {
+    res.send(`error in creating review: ${err}`)
+  }
+  // res.send('creating a review for hotel')
 }
 
 module.exports = {
@@ -66,5 +94,6 @@ module.exports = {
   show,
   create,
   deleteHotel,
-  update
+  update,
+  createReview
 }

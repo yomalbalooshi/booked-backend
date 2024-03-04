@@ -21,6 +21,9 @@ const create = async (req, res) => {
   }
   try {
     const hotel = await Hotel.create(req.body)
+    const company = await Company.findById(req.body.companyId)
+    company.hotels.push(hotel._id)
+    await company.save()
     res.send(hotel)
   } catch (err) {
     res.send(`error in creating hotel: ${err}`)

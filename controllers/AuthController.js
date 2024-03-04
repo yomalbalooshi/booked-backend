@@ -5,9 +5,7 @@ const middleware = require('../middleware')
 
 const RegisterCustomer = async (req, res) => {
   try {
-
     const { email, password, name, gender, nationality } = req.body
-
     let passwordDigest = await middleware.hashPassword(password)
 
     let exsitingCustomer = await Customer.findOne({ email })

@@ -7,11 +7,9 @@ const index = async (req, res) => {
   res.send(hotels)
 }
 const show = async (req, res) => {
-
   const hotel = await Hotel.findById(req.params.id)
     .populate('rooms')
     .populate('location')
-
   res.send(hotel)
   //might need to populate/add more details later
 }
@@ -48,10 +46,6 @@ const update = async (req, res) => {
   const update = {
     name: req.body.name,
     description: req.body.description,
-    locationLong: req.body.locationLong,
-    locationLat: req.body.locationLat,
-    // city: req.body.city,
-    // country: req.body.country,
     location: req.body.location,
     amenities: req.body.amenities
   }

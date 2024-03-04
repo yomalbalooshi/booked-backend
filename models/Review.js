@@ -9,9 +9,9 @@ const ReviewSchema = new Schema(
       max: 5,
       default: 5
     },
-    creationDate: function () {
+    creationDate: Date /* function () {
       return new Date().getFullYear()
-    },
+    }, */,
     customerId: { type: Schema.Types.ObjectId, ref: 'Customer' }
   },
   { timestamps: true }

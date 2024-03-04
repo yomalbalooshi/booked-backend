@@ -16,6 +16,7 @@ const MailRouter = require('./routes/sendMail')
 const hotelsRouter = require('./routes/hotels')
 const bookingsRouter = require('./routes/bookings')
 const roomsRouter = require('./routes/rooms')
+const reviewsRouter = require('./routes/reviews')
 
 var app = express()
 
@@ -32,12 +33,13 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.use(cors())
 
 app.use('/', indexRouter)
+app.use('/hotels', hotelsRouter)
 app.use('/users', usersRouter)
+app.use('/rooms', roomsRouter)
 app.use('/', AuthRouter)
 app.use('/mail', MailRouter)
-app.use('/hotels', hotelsRouter)
 app.use('/bookings', bookingsRouter)
-app.use('/rooms', roomsRouter)
+app.use('/reviews', reviewsRouter)
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

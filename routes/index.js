@@ -1,9 +1,12 @@
-var express = require('express');
-var router = express.Router();
+var express = require('express')
+var router = express.Router()
+// const hotelsCtrl = require('../controllers/hotels')
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});
+router.get('/', function (req, res, next) {
+  res.render('index', { title: 'Express' })
+})
 
-module.exports = router;
+//create a hotel review
+// router.post('/hotels/:id/reviews', hotelsCtrl.createReview)
+module.exports = router

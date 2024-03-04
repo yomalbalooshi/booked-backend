@@ -94,6 +94,9 @@ const UpdatePasswordCustomer = async (req, res) => {
 const RegisterCompany = async (req, res) => {
   try {
     const { email, password, name } = req.body
+    console.log('req.body :', req.body)
+    // res.send(req.body)
+
     let passwordDigest = await middleware.hashPassword(password)
 
     let exsitingCompany = await Company.findOne({ email })

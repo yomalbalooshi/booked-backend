@@ -47,8 +47,8 @@ const update = async (req, res) => {
     price: req.body.price,
     amenities: req.body.amenities,
     maxAdults: req.body.maxAdults,
-    maxChildren: req.body.maxChildren,
-    images: req.body.images
+    maxChildren: req.body.maxChildren
+    // images: req.body.images
   }
   try {
     const updatedRoom = await Room.findOneAndUpdate(

@@ -16,6 +16,7 @@ const MailRouter = require('./routes/sendMail')
 const hotelsRouter = require('./routes/hotels')
 const bookingsRouter = require('./routes/bookings')
 const roomsRouter = require('./routes/rooms')
+const cityRouter = require('./routes/city')
 
 var app = express()
 
@@ -38,6 +39,7 @@ app.use('/mail', MailRouter)
 app.use('/hotels', hotelsRouter)
 app.use('/bookings', bookingsRouter)
 app.use('/rooms', roomsRouter)
+app.use('/city', cityRouter)
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

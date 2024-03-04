@@ -7,8 +7,16 @@ const index = async (req, res) => {
   res.send(hotels)
 }
 const show = async (req, res) => {
-  const hotel = await Hotel.findById(req.params.id).populate('rooms')
-  hotel.populate('reviews')
+  const hotel = await Hotel.findById(req.params.id)
+    .populate('rooms')
+    .populate('reviews')
+    .exec()
+  // hotel.populate('reviews')
+  res.send(hotel)
+  //might need to populate/add more details later
+}
+const showCompanyHotels = async (req, res) => {
+  const hotel = await Hotel.find({ companyId: req.params.id })
   res.send(hotel)
   //might need to populate/add more details later
 }
@@ -41,7 +49,7 @@ const update = async (req, res) => {
     locationLat: req.body.locationLat,
     city: req.body.city,
     country: req.body.country,
-    image: req.body.image
+    amenities: req.body.amenities
   }
   try {
     const updatedHotel = await Hotel.findOneAndUpdate(
@@ -78,6 +86,7 @@ const createReview = async (req, res) => {
 
 module.exports = {
   index,
+  showCompanyHotels,
   show,
   create,
   deleteHotel,

@@ -8,7 +8,7 @@ router.get('/', roomCtrl.index)
 router.get('/hotel/:id', roomCtrl.showByHotel)
 //get specific room
 router.get('/:id', roomCtrl.show)
-//create a rooms
+//create a room
 router.post('/', roomCtrl.create)
 //delete a room
 router.delete('/:id', roomCtrl.deleteRoom)

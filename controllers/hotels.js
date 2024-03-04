@@ -1,5 +1,5 @@
 const Hotel = require('../models/Hotel')
-
+const Company = require('../models/Company')
 const index = async (req, res) => {
   const hotels = await Hotel.find({}).populate('rooms')
   res.send(hotels)

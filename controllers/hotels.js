@@ -46,7 +46,7 @@ const update = async (req, res) => {
   const update = {
     name: req.body.name,
     description: req.body.description,
-    location: req.body.location,
+
     amenities: req.body.amenities
   }
   try {

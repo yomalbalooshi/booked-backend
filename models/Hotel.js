@@ -7,8 +7,9 @@ const HotelSchema = new Schema(
     companyId: { type: Schema.Types.ObjectId, ref: 'Company' },
     locationLong: String,
     locationLat: String,
-    city: String,
-    country: String,
+    // city: String,
+    // country: String,
+    location: { type: Schema.Types.ObjectId, ref: 'City' },
     image: String,
     amenities: [
       {

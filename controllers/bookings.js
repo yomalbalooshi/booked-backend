@@ -7,7 +7,7 @@ const index = async (req, res) => {
 }
 
 const show = async (req, res) => {
-  const booking = await Booking.findById(req.params.id)
+  const booking = await Booking.findById(req.params.id).populate('roomType')
   res.send(booking)
   //might need to populate/add more details later
 }
@@ -62,7 +62,6 @@ const deleteBooking = async (req, res) => {
 const update = async (req, res) => {
   let bookingId = req.params.id
   const update = {
-    roomType: req.body.roomType,
     checkIn: req.body.checkIn,
     checkOut: req.body.checkOut,
     noOfRooms: req.body.noOfRooms,

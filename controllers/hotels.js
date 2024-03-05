@@ -2,6 +2,8 @@ const Hotel = require('../models/Hotel')
 const Company = require('../models/Company')
 const Review = require('../models/Review')
 const reviewCtrl = require('../controllers/reviews')
+const Booking = require('../models/Booking')
+const Room = require('../models/Room')
 
 const index = async (req, res) => {
   const hotels = await Hotel.find({}).populate('rooms').populate('location')
@@ -14,11 +16,7 @@ const show = async (req, res) => {
   res.send(hotel)
   //might need to populate/add more details later
 }
-const showCompanyHotels = async (req, res) => {
-  const hotel = await Hotel.find({ companyId: req.params.id })
-  res.send(hotel)
-  //might need to populate/add more details later
-}
+const showCompanyHotels = async (req, res) => {}
 const create = async (req, res) => {
   // Remove empty properties so that defaults will be applied
   for (let key in req.body) {

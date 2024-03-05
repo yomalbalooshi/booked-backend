@@ -13,7 +13,8 @@ const HotelSchema = new Schema(
       }
     ],
     rooms: [{ type: Schema.Types.ObjectId, ref: 'Room' }],
-    reviews: [{ type: Schema.Types.ObjectId, ref: 'Review' }]
+    reviews: [{ type: Schema.Types.ObjectId, ref: 'Review' }],
+    bookings: [{ type: Schema.Types.ObjectId, ref: 'Booking' }]
   },
   { timestamps: true }
 )

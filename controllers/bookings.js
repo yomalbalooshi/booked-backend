@@ -1,5 +1,6 @@
 const Booking = require('../models/Booking')
 const Customer = require('../models/Customer')
+const Hotel = require('../models/Hotel')
 
 const index = async (req, res) => {
   const bookings = await Booking.find({})
@@ -21,9 +22,13 @@ const create = async (req, res) => {
   try {
     const booking = await Booking.create(req.body)
     const customer = await Customer.findById(req.body.customerId)
+    const hotel = await Hotel.findById(booking.hotelId)
 
     customer.bookings.push(booking._id)
+    hotel.bookings.push(booking._id)
     await customer.save()
+    await hotel.save()
+
     res.send(booking)
   } catch (err) {
     res.send(`error in creating hotel: ${err}`)
@@ -46,7 +51,7 @@ const deleteBooking = async (req, res) => {
   console.log(req.body)
   try {
     const booking = await Booking.findById(req.params.id)
-    res.send(await booking.deleteOne())
+    const hotel = await Hotel.findById(booking.hotelId)
 
     const customer = await Customer.findById(req.body.userId)
 
@@ -54,6 +59,13 @@ const deleteBooking = async (req, res) => {
       (booking) => booking._id.toString() !== req.params.id
     )
     await customer.save()
+
+    hotel.bookings = hotel.bookings.filter(
+      (booking) => booking._id.toString() !== req.params.id
+    )
+    await hotel.save()
+    console.log('hotel', hotel)
+    res.send(await booking.deleteOne())
   } catch (error) {
     res.send(`error in deleting booking: ${error}`)
   }

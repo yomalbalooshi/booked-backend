@@ -3,13 +3,17 @@ const Review = require('../models/Review')
 const reviewCtrl = require('../controllers/reviews')
 
 const index = async (req, res) => {
-  const hotels = await Hotel.find({}).populate('rooms').populate('location')
+  const hotels = await Hotel.find({})
+    .populate('rooms')
+    .populate('location')
+    .populate('bookings')
   res.send(hotels)
 }
 const show = async (req, res) => {
   const hotel = await Hotel.findById(req.params.id)
     .populate('rooms')
     .populate('location')
+    .populate('bookings')
   res.send(hotel)
   //might need to populate/add more details later
 }
@@ -46,7 +50,6 @@ const update = async (req, res) => {
   const update = {
     name: req.body.name,
     description: req.body.description,
-
     amenities: req.body.amenities
   }
   try {

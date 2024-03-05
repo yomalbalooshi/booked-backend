@@ -9,8 +9,15 @@ const index = async (req, res) => {
 const show = async (req, res) => {
   const hotel = await Hotel.findById(req.params.id)
     .populate('rooms')
-    .populate('reviews')
+    .populate({
+      path: 'reviews',
+      populate: {
+        path: 'customer',
+        model: 'Customer'
+      }
+    })
     .exec()
+  // console.log('showing hotel :', hotel)
   // hotel.populate('reviews')
   res.send(hotel)
   //might need to populate/add more details later
@@ -65,7 +72,7 @@ const update = async (req, res) => {
 }
 
 const createReview = async (req, res) => {
-  console.log('Creating hotel review..')
+  // console.log('Creating hotel review..')
   try {
     const reviewBody = {
       feedback: req.body.feedback,
@@ -74,14 +81,40 @@ const createReview = async (req, res) => {
     }
     // await review.save()
     const review = await reviewCtrl.createReview(reviewBody)
+    // console.log('hotel review created  , new review now ==> ', review)
     const hotel = await Hotel.findById(req.params.id).populate('reviews')
     hotel.reviews.push(review._id)
     await hotel.save()
+    // console.log('hotel review created  , hotel is now ==> ', hotel)
     res.send(hotel)
   } catch (err) {
     res.send(`error in creating review: ${err}`)
   }
   // res.send('creating a review for hotel')
+}
+
+const deleteReview = async (req, res) => {
+  try {
+    const hotel = await Hotel.findById(req.params.id)
+    const review = await Review.findById(req.params.reviewId)
+
+    hotel.reviews = hotel.reviews.filter(
+      (reviewId) => review._id !== req.params.reviewId
+    )
+    await hotel.save()
+
+    // reviewCtrl.createReview(reviewBody)
+    console.log(
+      'Deleting reviw: ',
+      review.feedback,
+      ' from hotel :',
+      hotel.name
+    )
+    res.send(await review.deleteOne())
+    // res.send(await hotel.deleteOne())
+  } catch (error) {
+    res.send(`error in deleting hotel: ${error}`)
+  }
 }
 
 module.exports = {
@@ -91,5 +124,6 @@ module.exports = {
   create,
   deleteHotel,
   update,
-  createReview
+  createReview,
+  deleteReview
 }

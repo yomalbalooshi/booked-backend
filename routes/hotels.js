@@ -10,6 +10,8 @@ router.get('/companyprofile/:id', hotelsCtrl.showCompanyHotels)
 router.get('/:id', hotelsCtrl.show)
 //create a hotel review
 router.post('/:id/reviews', hotelsCtrl.createReview)
+//deleate a hotel review
+router.delete('/:id/reviews/:reviewId', hotelsCtrl.deleteReview)
 //create a hotel
 router.post('/', hotelsCtrl.create)
 router.delete('/:id', hotelsCtrl.deleteHotel)

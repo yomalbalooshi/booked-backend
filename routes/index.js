@@ -1,6 +1,6 @@
 var express = require('express')
 var router = express.Router()
-// const hotelsCtrl = require('../controllers/hotels')
+const hotelsCtrl = require('../controllers/hotels')
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
@@ -9,4 +9,5 @@ router.get('/', function (req, res, next) {
 
 //create a hotel review
 // router.post('/hotels/:id/reviews', hotelsCtrl.createReview)
+router.get('/test/:id', hotelsCtrl.show)
 module.exports = router

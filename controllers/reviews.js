@@ -41,6 +41,8 @@ const create = async (req, res) => {
   }
   try {
     const review = await Review.create(req.body)
+    review.creationDate = new Date()
+    review.save()
     res.send(review)
   } catch (err) {
     res.send(`error in creating review: ${err}`)

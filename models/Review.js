@@ -9,11 +9,20 @@ const ReviewSchema = new Schema(
       max: 5,
       default: 5
     },
-    creationDate: Date /* function () {
-      return new Date().getFullYear()
-    }, */,
-    customerId: { type: Schema.Types.ObjectId, ref: 'Customer' }
+
+    customerId: { type: Schema.Types.ObjectId, ref: 'Customer' },
+    creationDate: { type: Date }
   },
   { timestamps: true }
 )
+
+ReviewSchema.virtual('customer', {
+  ref: 'Customer',
+  localField: 'customerId',
+  foreignField: '_id'
+})
+
+ReviewSchema.set('toObject', { virtuals: true })
+ReviewSchema.set('toJSON', { virtuals: true })
+
 module.exports = mongoose.model('Review', ReviewSchema)

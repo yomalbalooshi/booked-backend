@@ -16,6 +16,7 @@ const show = async (req, res) => {
   const hotel = await Hotel.findById(req.params.id)
     .populate('rooms')
     .populate('location')
+    .populate('reviews')
     .populate({ path: 'bookings', populate: { path: 'customerId' } })
   res.send(hotel)
   //might need to populate/add more details later

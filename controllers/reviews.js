@@ -1,4 +1,5 @@
 const Review = require('../models/Review')
+const Hotel = require('../models/Hotel')
 
 // No use (see routes/reviews)
 const index = async (req, res) => {
@@ -17,7 +18,16 @@ const showByHotel = async (req, res) => {
 }
 const deleteReview = async (req, res) => {
   try {
+    console.log(req.body)
     const review = await Review.findById(req.params.id)
+
+    const hotel = await Hotel.findById(req.body.hotelId)
+
+    hotel.reviews = hotel.reviews.filter(
+      (review) => review._id.toString() !== req.params.id
+    )
+    await hotel.save()
+
     res.send(await review.deleteOne())
   } catch (error) {
     res.send(`error in deleting review: ${error}`)

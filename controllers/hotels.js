@@ -16,11 +16,25 @@ const show = async (req, res) => {
   const hotel = await Hotel.findById(req.params.id)
     .populate('rooms')
     .populate('location')
-    .populate('bookings')
+    .populate({ path: 'bookings', populate: { path: 'customerId' } })
   res.send(hotel)
   //might need to populate/add more details later
 }
-const showCompanyHotels = async (req, res) => {}
+const showCompanyHotels = async (req, res) => {
+  const hotel = await Hotel.find({ companyId: req.params.id })
+    .populate('rooms')
+    .populate('location')
+    .populate({ path: 'bookings', populate: { path: 'customerId' } })
+  console.log(hotel)
+  res.send(hotel)
+}
+const deleteNone = async (req, res) => {
+  const bookings = await Booking.find().populate('customerId')
+  const emptyBooking = bookings.filter((booking) => booking.customerId === null)
+  console.log(emptyBooking)
+  res.send('OK')
+}
+
 const create = async (req, res) => {
   // Remove empty properties so that defaults will be applied
   for (let key in req.body) {
@@ -91,5 +105,6 @@ module.exports = {
   create,
   deleteHotel,
   update,
-  createReview
+  createReview,
+  deleteNone
 }

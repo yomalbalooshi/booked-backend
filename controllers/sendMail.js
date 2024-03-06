@@ -25,12 +25,13 @@ const create = async (req, res) => {
         console.log('All works fine, congratz!')
       }
     })
-
+    const messageString =
+      'from: ' + req.body.email + ' Message: ' + req.body.messageHtml
     var mail = {
       from: req.body.name,
-      to: req.body.email,
-      subject: 'Test Mail from nodemailer-test1 proj',
-      html: req.body.messageHtml
+      to: 'yyasmeen.b@gmail.com',
+      subject: 'Booked Contact Request',
+      html: messageString
     }
 
     transporter.sendMail(mail, (err, data) => {

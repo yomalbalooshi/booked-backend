@@ -3,12 +3,17 @@ const Review = require('../models/Review')
 const reviewCtrl = require('../controllers/reviews')
 
 const index = async (req, res) => {
-  const hotels = await Hotel.find({}).populate('rooms')
+  const hotels = await Hotel.find({})
+    .populate('rooms')
+    .populate('location')
+    .populate('bookings')
   res.send(hotels)
 }
 const show = async (req, res) => {
   const hotel = await Hotel.findById(req.params.id)
     .populate('rooms')
+    .populate('location')
+    .populate('bookings')
     .populate({
       path: 'reviews',
       populate: {
@@ -34,6 +39,9 @@ const create = async (req, res) => {
   }
   try {
     const hotel = await Hotel.create(req.body)
+    const company = await Company.findById(req.body.companyId)
+    company.hotels.push(hotel._id)
+    await company.save()
     res.send(hotel)
   } catch (err) {
     res.send(`error in creating hotel: ${err}`)
@@ -52,10 +60,6 @@ const update = async (req, res) => {
   const update = {
     name: req.body.name,
     description: req.body.description,
-    locationLong: req.body.locationLong,
-    locationLat: req.body.locationLat,
-    city: req.body.city,
-    country: req.body.country,
     amenities: req.body.amenities
   }
   try {

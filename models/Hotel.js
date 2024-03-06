@@ -5,10 +5,7 @@ const HotelSchema = new Schema(
     name: String,
     description: String,
     companyId: { type: Schema.Types.ObjectId, ref: 'Company' },
-    locationLong: String,
-    locationLat: String,
-    city: String,
-    country: String,
+    location: { type: Schema.Types.ObjectId, ref: 'City' },
     image: String,
     amenities: [
       {
@@ -16,7 +13,8 @@ const HotelSchema = new Schema(
       }
     ],
     rooms: [{ type: Schema.Types.ObjectId, ref: 'Room' }],
-    reviews: [{ type: Schema.Types.ObjectId, ref: 'Review' }]
+    reviews: [{ type: Schema.Types.ObjectId, ref: 'Review' }],
+    bookings: [{ type: Schema.Types.ObjectId, ref: 'Booking' }]
   },
   { timestamps: true }
 )
